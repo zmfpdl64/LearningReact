@@ -14,16 +14,16 @@ class App extends Component {
     super(props);
     this.state = {
       subject:{title:"Web", sub:"Wolrd wide Web"},
-      content: {
-        title:"HTML",
-        desc: "HTML HyperText Markup Language."
-      },
+      contents: [
+        {id:1, title:'HTML', desc:'HTML is HyperText Markup Language'},
+        {id:2, title:'CSS', desc:'Css is for Design'},
+        {id:3, title:'JavaScript', desc:'JavaScript is for intensive'},
+      ]
+      ,
       footer:{
         msg: "i'm Footer"
       }
-
     }
-
   }
 
   render() {
@@ -33,12 +33,11 @@ class App extends Component {
           title={this.state.subject.title} 
           sub={this.state.subject.sub}>
         </Subject>
-        <TOC></TOC>
-        <Content title={this.state.content.title} desc={this.state.content.desc}></Content>
+        <TOC data={this.state.contents}></TOC>
+        <Content date={this.state.contents}></Content>
         <Footer msg={this.state.footer.msg}></Footer>
       </div>
     );
   }
 }
-
 export default App;
