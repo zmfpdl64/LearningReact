@@ -13,7 +13,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "welcome",
+      mode: "read",
       subject:{title:"Web", sub:"Wolrd wide Web"},
       welcome:{title:"Welcome", desc:"Hello, React!!"},
       contents: [
@@ -51,7 +51,18 @@ class App extends Component {
           <h1><a href="/" onClick={function(e) {
             console.log(e);
             e.preventDefault();
-          }}>{this.state.subject.title}</a></h1>
+            // this.state.mode='welcome'; // 여기서의 this는 어떤것도 가리키지 않는 상태이다.
+            if(this.state.mode === 'welcome'){
+              this.setState({
+                mode:'read'
+              });
+            }else{
+              this.setState({
+                mode:'welcome'
+              });
+            }
+
+          }.bind(this)}>{this.state.subject.title}</a></h1> 
           {this.state.subject.sub}
         </header>
         <TOC data={this.state.contents}></TOC>
