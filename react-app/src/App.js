@@ -13,12 +13,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode: "welcome",
       subject:{title:"Web", sub:"Wolrd wide Web"},
+      welcome:{title:"Welcome", desc:"Hello, React!!"},
       contents: [
         {id:1, title:'HTML', desc:'HTML is HyperText Markup Language'},
         {id:2, title:'CSS', desc:'Css is for Design'},
         {id:3, title:'JavaScript', desc:'JavaScript is for intensive'},
       ]
+      ,
+      content:{title:'HTML', desc:'HTML is HyperText Markup Langauge'}
       ,
       footer:{
         msg: "i'm Footer"
@@ -27,6 +31,17 @@ class App extends Component {
   }
 
   render() {
+    console.log('App render');
+    var _title, _desc = null;
+    if(this.state.mode==='welcome'){
+      _title = this.state.welcome.title;
+      _desc = this.state.welcome.desc;
+
+    }else if(this.state.mode==='read'){
+      _title = this.state.content.title
+      _desc = this.state.content.desc;
+    }
+
     return (
       <div className="App">
         <Subject 
@@ -34,7 +49,7 @@ class App extends Component {
           sub={this.state.subject.sub}>
         </Subject>
         <TOC data={this.state.contents}></TOC>
-        <Content date={this.state.contents}></Content>
+        <Content title={_title} desc={_desc}></Content>
         <Footer msg={this.state.footer.msg}></Footer>
       </div>
     );
