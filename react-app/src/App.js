@@ -43,28 +43,22 @@ class App extends Component {
 
     return (
       <div className="App">
-        {/* <Subject 
+        <Subject 
           title={this.state.subject.title} 
-          sub={this.state.subject.sub}>
-        </Subject> */}
-        <header>
-          <h1><a href="/" onClick={function(e) {
-            console.log(e);
-            e.preventDefault();
-            // this.state.mode='welcome'; // 여기서의 this는 어떤것도 가리키지 않는 상태이다.
+          sub={this.state.subject.sub}
+          onChangePage={function() {
             if(this.state.mode === 'welcome'){
               this.setState({
-                mode:'read'
+                mode : "read"
               });
             }else{
               this.setState({
-                mode:'welcome'
+                mode : 'welcome'
               });
             }
-
-          }.bind(this)}>{this.state.subject.title}</a></h1> 
-          {this.state.subject.sub}
-        </header>
+          }.bind(this)}
+          >
+        </Subject>
         <TOC data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
         <Footer msg={this.state.footer.msg}></Footer>
