@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import TOC from './components/TOC';
 import Subject from './components/Subject';
-import Content from './components/Content';
+import ReadContent from './components/ReadContent';
+import CreateContent from './components/CreateContent';
 import Footer from './components/Footer';
+import Control from './components/Control';
 
 
 
@@ -33,10 +35,11 @@ class App extends Component {
 
   render() {
     var _title, _desc = null;
+    var _article = null;
     if(this.state.mode==='welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
-
+      _article = <ReadContent title={_title} desc={_desc}></ReadContent>
     }else if(this.state.mode==='read'){
       var i = 0;
       while(i < this.state.contents.length){
@@ -49,6 +52,8 @@ class App extends Component {
         }
         i+=1
       }
+    }else if(this.state.mode === 'create'){
+      _article = <CreateContent></CreateContent>
     }
 
     return (
@@ -76,7 +81,17 @@ class App extends Component {
           })
         }.bind(this)} 
         data={this.state.contents}></TOC>
-        <Content title={_title} desc={_desc}></Content>
+        <Control onChangeMode={function(_mode) {
+          this.setState({mode:_mode});
+          if(_mode === 'create'){
+            this.setState({mode: _mode})
+          }else if(_mode === 'update'){
+            this.setState({mode: _mode})
+          }else if(_mode === 'delete'){
+            this.setState({mode: _mode})
+          }
+        }.bind(this)}></Control>
+        {_article}
         <Footer msg={this.state.footer.msg}></Footer>
       </div>
     );
