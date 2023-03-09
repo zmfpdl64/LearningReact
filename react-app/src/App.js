@@ -45,7 +45,6 @@ class App extends Component {
       while(i < this.state.contents.length){
         var data = this.state.contents[i];
         if(data.id === this.state.selected_content_id){
-          console.log(data)
           _title = data.title;
           _desc = data.desc;
           break;
@@ -54,7 +53,13 @@ class App extends Component {
       }
     }else if(this.state.mode === 'create'){
       _article = <CreateContent onSubmit={function(_title, _desc){
-        console.log(_title, _desc);
+        this.max_content_id = this.state.contents.length+1;
+        var _contents = this.state.contents.concat({
+          id:this.max_content_id, title:_title, desc:_desc
+        });
+        this.setState({
+          contents: _contents
+        })
       }.bind(this)}>
 
       </CreateContent>
