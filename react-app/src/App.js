@@ -26,7 +26,8 @@ class App extends Component {
       ,
       footer:{
         msg: "i'm Footer"
-      }
+      },
+      selected_content_id:2
     }
   }
 
@@ -37,8 +38,17 @@ class App extends Component {
       _desc = this.state.welcome.desc;
 
     }else if(this.state.mode==='read'){
-      _title = this.state.content.title
-      _desc = this.state.content.desc;
+      var i = 0;
+      while(i < this.state.contents.length){
+        var data = this.state.contents[i];
+        if(data.id === this.state.selected_content_id){
+          console.log(data)
+          _title = data.title;
+          _desc = data.desc;
+          break;
+        }
+        i+=1
+      }
     }
 
     return (
@@ -59,7 +69,13 @@ class App extends Component {
           }.bind(this)}
           >
         </Subject>
-        <TOC data={this.state.contents}></TOC>
+        <TOC onChangePage={function(id) {
+          this.setState({
+            mode : 'read',
+            selected_content_id:Number(id)
+          })
+        }.bind(this)} 
+        data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
         <Footer msg={this.state.footer.msg}></Footer>
       </div>
