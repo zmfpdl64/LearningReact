@@ -69,7 +69,7 @@ npx serve -s build
 ### 컴포넌트를 만드는 방법
 
 
-```
+```javascript
 class App extends Component {
   render() {
     return (
@@ -93,7 +93,7 @@ EX) \<div> \</div> 이나  \<header> \</header>
 
 # 컴포넌트 내용 변경하기
 
-```
+```javascript
 
 // Subject 컴포넌트
       <header>
@@ -123,7 +123,7 @@ props는 초기화 한 데이터를 내가 적재하고 싶은 곳에 데이터�
 
 # 이벤트
 
-```
+```javascript
         <header>
           <h1><a href="/" onClick={function(e) {
             console.log(e);
@@ -136,7 +136,7 @@ props는 초기화 한 데이터를 내가 적재하고 싶은 곳에 데이터�
 `e.preventDefault`는 리로딩하지 않게 해주는 메소드이다.
 <br><br>
 # 이벤트 발생시 state 변경
-```
+```javascript
         <header>
           <h1><a href="/" onClick={function(e) {
             console.log(e);
@@ -169,8 +169,11 @@ props는 초기화 한 데이터를 내가 적재하고 싶은 곳에 데이터�
 
 # 컴포넌트 이벤트 만들기
 
-Subject 컴포넌트
-```
+<details>
+
+<summary>Subject 컴포넌트</summary>
+
+```javascript
 class Subject extends Component {
     render() {
       return (
@@ -188,9 +191,15 @@ class Subject extends Component {
 
 이벤트가 발생하면 화면의 변화를 막기 위해서 preventDefault함수를 실행하여 변경을 방지하고
 상위 컴포넌트에 정의한 함수를 불러온다.
+
+</details>
+
 <br><br>
-App컴포넌트 안에 render메소드
-```
+
+<details>
+<summary>App컴포넌트 안에 render메소드</summary>
+
+```javascript
         <Subject 
           title={this.state.subject.title} 
           sub={this.state.subject.sub}
@@ -212,15 +221,18 @@ App컴포넌트 안에 render메소드
 - 하위 컴포넌트 안에서 onClick 메소드를 추가해서 이벤트를 추가한다.<br>
 - 이벤트가 발생하면 function안에서 상위 컴포넌트에서 정의한 함수를 발생한다.
 
+</details>
+
 실행동작 순서 
 1. \<a>태그 클릭 화면 
 2. 리다이렉션, get 정지 (preventDefault())
 3. 상위 컴포넌트의 원하는 함수 실행 (onChangePage())
 4. 상위 컴포넌트의 함수 동작
+<br><br>
 
 # 컴포넌트 이벤트 함수 인자 넘기기
 
-```
+```javascript
 class TOC extends Component{
     render() {
         var lists = [];
@@ -247,7 +259,7 @@ class TOC extends Component{
 
 data-xxx 방식은 react에서 지원하는 방식으로 e.target.dataset.xxx로 데이터를 읽을 수 있다.
 
-```
+```javascript
 <TOC onChangePage={function(id) {
           this.setState({
             mode : 'read',
@@ -260,7 +272,7 @@ TOC컴포넌트에서 전달한 인자를 id로 받고 state를 변경하는 것
 
 ## 두번째 방법은 속성을 만들지 말고 바로 사용하는 방법
 
-```
+```javascript
                 onClick={function(id, e) {
                   e.preventDefault();
                   this.props.onChangePage(id);
@@ -271,7 +283,7 @@ TOC컴포넌트에서 전달한 인자를 id로 받고 state를 변경하는 것
 
 # create 기능 구현
 
-```
+```javascript
 <CreateContent onSubmit={function(_title, _desc){
         this.max_content_id = this.state.contents.length+1;
         var _contents = this.state.contents.concat({
@@ -287,7 +299,7 @@ TOC컴포넌트에서 전달한 인자를 id로 받고 state를 변경하는 것
 ```
 생성이라는 버튼이 발생하면 이벤트가 발생하여 위의 메소드를 실행시킨다. 이것은 TOC의 contents에 title, desc를 추가하는 코드이다.<br><br>
 
-```
+```javascript
       return (
         <article>
           <h2>Create</h2>
