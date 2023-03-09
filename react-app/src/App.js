@@ -53,7 +53,11 @@ class App extends Component {
         i+=1
       }
     }else if(this.state.mode === 'create'){
-      _article = <CreateContent></CreateContent>
+      _article = <CreateContent onSubmit={function(_title, _desc){
+        console.log(_title, _desc);
+      }.bind(this)}>
+
+      </CreateContent>
     }
 
     return (

@@ -7,8 +7,11 @@ class CreateContent extends Component{
           <h2>Create</h2>
           <form action="/create_process" method="post"
             onSubmit={function(e) {
+              this.props.onSubmit(
+                e.target.title.value,
+                e.target.desc.value
+              );
               e.preventDefault();
-              alert('submit');
             }.bind(this)}
           >
             <p><input type="text" name="title" placeholder='title'></input></p>
