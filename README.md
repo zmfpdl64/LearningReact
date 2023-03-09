@@ -271,6 +271,50 @@ TOC컴포넌트에서 전달한 인자를 id로 받고 state를 변경하는 것
 
 # create 기능 구현
 
+```
+<CreateContent onSubmit={function(_title, _desc){
+        this.max_content_id = this.state.contents.length+1;
+        var _contents = this.state.contents.concat({
+          id:this.max_content_id, title:_title, desc:_desc
+        });
+        this.setState({
+          contents: _contents
+        })
+      }.bind(this)}>
+
+      </CreateContent>
+    }
+```
+생성이라는 버튼이 발생하면 이벤트가 발생하여 위의 메소드를 실행시킨다. 이것은 TOC의 contents에 title, desc를 추가하는 코드이다.<br><br>
+
+```
+      return (
+        <article>
+          <h2>Create</h2>
+          <form action="/create_process" method="post"
+            onSubmit={function(e) {
+              this.props.onSubmit(
+                e.target.title.value,
+                e.target.desc.value
+              );
+              e.preventDefault();
+            }.bind(this)}
+          >
+            <p><input type="text" name="title" placeholder='title'></input></p>
+            <p><textarea name="desc" placeholder='description'></textarea></p>
+            <p><input type='submit'></input></p>
+          </form>
+        </article>
+      );
+```
+위의 코드는 CreateContent 컴포넌트이다. 입력받은 title, desc를 추출하여 상위 컴포넌트에 전달한다.  <br><br>
+
+# state 최적화
+규모가 작은 프로그램이라면 시스템을 동작하는데 무리가 없을 것이다. 하지만 규모가 커진다면 렌더링이 오래 걸려 렉이 걸리는 경험을 할 것이다. 그렇기에 최적화가 필요하다.
+
+- shouldComponentUpdate 라는 함수를 사용하여 변경되었을 때만 render함수가 동작하게 한다.
+- 원본배열을 사용하지 않고 복제본을 이용하여 state를 관리한다.
+<br><br>
 
 
 
