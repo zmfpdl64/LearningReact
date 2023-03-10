@@ -4,6 +4,7 @@ import TOC from './components/TOC';
 import Subject from './components/Subject';
 import ReadContent from './components/ReadContent';
 import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 import Footer from './components/Footer';
 import Control from './components/Control';
 
@@ -15,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "create",
+      mode: "update",
       subject:{title:"Web", sub:"Wolrd wide Web"},
       welcome:{title:"Welcome", desc:"Hello, React!!"},
       contents: [
@@ -33,7 +34,18 @@ class App extends Component {
     }
   }
 
-  render() {
+  getReadContent(){
+    var i = 0;
+      while(i < this.state.contents.length){
+        var data = this.state.contents[i];
+        if(data.id === this.state.selected_content_id){
+          return data;
+        }
+        i+=1
+    }
+  }
+
+  getContent(){
     var _title, _desc = null;
     var _article = null;
     if(this.state.mode==='welcome'){
@@ -47,6 +59,7 @@ class App extends Component {
         if(data.id === this.state.selected_content_id){
           _title = data.title;
           _desc = data.desc;
+          _article = <ReadContent title={_title} desc={_desc}></ReadContent>
           break;
         }
         i+=1
@@ -61,10 +74,29 @@ class App extends Component {
           contents: _contents
         })
       }.bind(this)}>
-
       </CreateContent>
+    }else if(this.state.mode === 'update'){
+      var _content = this.getReadContent();
+      _article = <UpdateContent updateId={_content.id} title={_content.title} desc={_content.desc} updateContent={function(_id, _title, _desc){
+        var datas = Array.from(this.state.contents);
+        for(var i = 0; i < this.state.contents.length; i++){
+          var data = datas[i];
+          if(data.id === _id){
+            datas[i] = {id: datas[i].id, title:_title, desc: _desc};
+            this.setState({
+              contents: datas,
+              mode: "read"
+            });
+            break;
+          }
+        }
+      }.bind(this)}>
+      </UpdateContent>
     }
-
+    return _article
+  }
+  render() {
+    var _article = this.getContent();
     return (
       <div className="App">
         <Subject 

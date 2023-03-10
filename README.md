@@ -328,9 +328,101 @@ TOC컴포넌트에서 전달한 인자를 id로 받고 state를 변경하는 것
 - 원본배열을 사용하지 않고 복제본을 이용하여 state를 관리한다.
 <br><br>
 
+# Update 방법
 
+Update방식은 Create와 유사하다<br>
+ - 기존의 내용을 가지고 UpdateForm에 전달한다.
+ - 변경할 내용을 입력받는다.
+ - 변경한다.
+ - read모드로 전환한다.
 
+## App 컴포넌트
 
+ ```javascript
+else if(this.state.mode === 'update'){
+      var _content = this.getReadContent();
+      _article = <UpdateContent updateId={_content.id} title={_content.title} desc={_content.desc} updateContent={function(_id, _title, _desc){
+        var datas = Array.from(this.state.contents);
+        for(var i = 0; i < this.state.contents.length; i++){
+          var data = datas[i];
+          if(data.id === _id){
+            datas[i] = {id: datas[i].id, title:_title, desc: _desc};
+            this.setState({
+              contents: datas,
+              mode: "read"
+            });
+            break;
+          }
+        }
+      }.bind(this)}>
+ ```
+- getReadContent함수를 이용해서 내가 선택한 글을 가져온다
+- 가져온 글을 업데이트컴포넌트에 제목, 설명, id를 전달한다.
+<br><br><br>
+
+## 업데이터 컴포넌트
+
+<details>
+<summary>코드</summary>
+
+```javascript
+class UpdateContent extends Component{
+  constructor(props) {
+    super(props);
+    this.state={
+      title: this.props.title,
+      desc: this.props.desc
+    }
+    this.InputFormHandler = this.InputFormHandler.bind(this);
+  };
+  InputFormHandler(e) {
+    this.setState({[e.target.name]: e.target.value});
+  }
+    render() {
+      var _title = this.state.title;
+      var _desc = this.state.desc;
+      return (
+        <article>
+          <h2>Update</h2>
+          <form action="/create_process" method="post"
+            onSubmit={function(id, e) {
+              e.preventDefault();
+              this.props.updateContent(
+                id, 
+                e.target.title.value,
+                e.target.desc.value
+              );
+            }.bind(this, this.props.updateId)}
+          >
+            <p><input type="text" name="title"  placeholder="title" value={_title}
+            onChange={this.InputFormHandler}
+            >
+              </input></p>
+            <p><textarea name="desc" placeholder="description"
+            value={_desc}
+            onChange={this.InputFormHandler}
+            >
+              </textarea></p>
+            <p><input type='submit'></input></p>
+          </form>
+        </article>
+      );
+    }
+  }
+  export default UpdateContent;
+```
+</details>
+
+- 제목과 설명란에 데이터를 적재한다.
+- 데이터를 입력받고 제출 버튼을 누르면 상위 컴포넌트에 데이터를 전달한다.
+
+생성 컴포넌트와 매우 유사하다. 기존의 제목과 내용을 적재한 것이다.
+
+## `주의사항`
+
+- 리액트의 규칙은 input, textarea와 같은 태그안의 값은 value로 지정해 줘야 한다.<br>
+- value로 지정해 줄 때 이 값은 state값여야 한다.(props 금지 read-only)
+- 데이터를 변경시킬 때는 `onClick` 필드를 지정해서 변경해줘야한다.
 
 
 
