@@ -16,7 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mode: "update",
+      mode: "welcome",
       subject:{title:"Web", sub:"Wolrd wide Web"},
       welcome:{title:"Welcome", desc:"Hello, React!!"},
       contents: [
@@ -129,7 +129,18 @@ class App extends Component {
           }else if(_mode === 'update'){
             this.setState({mode: _mode})
           }else if(_mode === 'delete'){
-            this.setState({mode: _mode})
+            var _id = this.state.selected_content_id;
+            var _contents = Array.from(this.state.contents);
+            if(window.confirm('진짜 삭제할건가요')){for(var i = 0; i < _contents.length; i++){
+              if (_contents[i].id === _id){
+                _contents.pop(i);
+                break;
+              }
+            }}
+            this.setState({
+              mode: 'welcome',
+              contents: _contents
+            })
           }
         }.bind(this)}></Control>
         {_article}

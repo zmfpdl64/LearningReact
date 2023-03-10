@@ -425,7 +425,20 @@ class UpdateContent extends Component{
 - 데이터를 변경시킬 때는 `onClick` 필드를 지정해서 변경해줘야한다.
 
 
+# Delete 방법
 
+```javascript
+          }else if(_mode === 'delete'){
+            var _id = this.state.selected_content_id;
+            var _contents = Array.from(this.state.contents);
+            if(window.confirm('진짜 삭제할건가요')){for(var i = 0; i < _contents.length; i++){
+              if (_contents[i].id === _id){
+                _contents.pop(i);
+                break;
+              }
+            }}
+```
+선택되어 있는 `this.state.selected_content_id` 를 통해 해당 게시글을 찾고 삭제한다.
 
 
 
