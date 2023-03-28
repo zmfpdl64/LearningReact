@@ -14,9 +14,6 @@ jobs:
 
     runs-on: ubuntu-latest
     
-    env:
-      working-directory: ./react-app
-
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -29,7 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    #- run: npm install
-    #- run: npm run start
+    - working-directory: ./react-app
+    - run: npm install
+    - run: npm run start
     - run: pwd
     - run: ls -al
