@@ -26,8 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - working-directory: ./react-app
     - run: npm install
+      working-directory: ./react-app  
     - run: npm run start
-    - run: pwd
-    - run: ls -al
