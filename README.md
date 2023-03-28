@@ -1,4 +1,5 @@
-﻿<h2>LearningReact</h2>
+[![Node.js CI](https://github.com/zmfpdl64/LearningReact/actions/workflows/node.js.yml/badge.svg)](https://github.com/zmfpdl64/LearningReact/actions/workflows/node.js.yml)
+<h2>LearningReact</h2>
 
 # React의 장점
 
