@@ -29,3 +29,5 @@ jobs:
     - run: npm install
       working-directory: ./react-app  
     - run: npm run start
+      working-directory: ./react-app  
+    
