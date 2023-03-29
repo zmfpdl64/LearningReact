@@ -11,6 +11,15 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: npm install and build webpack
+      run: |
+        npm install
+        npm run build
+        working-directory: ./react-app  
+  test:
 
     runs-on: ubuntu-latest
     
@@ -26,8 +35,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-      working-directory: ./react-app  
-    - run: npm run build
+    - run: npm test
       working-directory: ./react-app  
     
